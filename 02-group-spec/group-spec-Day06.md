@@ -62,3 +62,8 @@ Khi câu trả lời bị sai, hậu quả kém nghiêm trọng vì chưa chốt
 
 Cuối cùng, ghi rõ ai phụ trách phần nào — người viết và kiểm thử prompt, người dựng giao diện, người giữ repo, người viết kịch bản demo, và người lo phần bằng chứng. Mỗi thành viên cần có một phần đủ rõ để tự mình giải thích được khi demo.
 
+- Nguyễn Đoàn Gia Tuấn: Viết Spec
+- Nguyễn Minh Đức: Build agent 
+- Phạm Văn Sơn:  Dựng giao diện
+
+- Tuấn + Đức + Sơn: Viết prompt, test + demo, build data.
