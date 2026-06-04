@@ -52,9 +52,11 @@ Khi câu trả lời bị sai, hậu quả kém nghiêm trọng vì chưa chốt
 
 #### A. Đầu vào bình thường cho đường thuận
 
-
+![Demo1](./images/demo1.png)
 
 #### B. Đầu vào gây nhiễu 
+
+![Demo2](./images/demo2.png)
 
 ## 8. Phân công
 
