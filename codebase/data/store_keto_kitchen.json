@@ -1,0 +1,22 @@
+{
+  "store_id": "S03",
+  "name": "Bếp Keto Hà Nội",
+  "category": "Keto, Eat Clean",
+  "rating": 4.9,
+  "menu": [
+    {
+      "item_id": "M05",
+      "name": "Mì Ý Zucchini Sốt Bò Bằm",
+      "price": 95000,
+      "calories": 420,
+      "description": "Mì làm từ bí ngòi ít carb, sốt bò bằm cà chua nguyên chất."
+    },
+    {
+      "item_id": "M06",
+      "name": "Cá Hồi Nướng Măng Tây",
+      "price": 125000,
+      "calories": 520,
+      "description": "Cá hồi Na Uy nướng bơ tỏi, ăn kèm măng tây xào."
+    }
+  ]
+}

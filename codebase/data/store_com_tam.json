@@ -1,0 +1,22 @@
+{
+  "store_id": "S02",
+  "name": "Cơm Sườn Đào Duy Từ",
+  "category": "Cơm, Món Việt",
+  "rating": 4.5,
+  "menu": [
+    {
+      "item_id": "M03",
+      "name": "Cơm Đảo Sườn Nướng BBQ",
+      "price": 65000,
+      "calories": 780,
+      "description": "Sườn nướng BBQ đậm đà, ăn kèm cơm đảo mỡ hành thơm phức cực bắt miệng."
+    },
+    {
+      "item_id": "M04",
+      "name": "Cơm Gà Quay Tiêu Đen",
+      "price": 60000,
+      "calories": 810,
+      "description": "Đùi gà quay giòn rụm, thịt mềm mọng nước tắm trong sốt tiêu đen đặc trưng."
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "store_id": "S04",
+  "name": "Poke Hanoi - Hawaiian Salad",
+  "category": "Salad, Healthy",
+  "rating": 4.7,
+  "menu": [
+    {
+      "item_id": "M07",
+      "name": "Bát Salad Tự Chọn 5 Topping Đạm",
+      "price": 80000,
+      "calories": 400,
+      "description": "Salad đầy đặn với trứng, ức gà, đậu hũ non. Cực nhiều protein, phù hợp siết mỡ."
+    },
+    {
+      "item_id": "M08",
+      "name": "Salad Bò Mỹ Sốt Mè Rang (Keto)",
+      "price": 95000,
+      "calories": 450,
+      "description": "Thịt bò nạc thơm mềm kèm các loại rau củ ít đường, rất hợp với chế độ Keto."
+    }
+  ]
+}

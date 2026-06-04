@@ -1,0 +1,22 @@
+{
+  "store_id": "S05",
+  "name": "Bò Tơ Quán Mộc",
+  "category": "Thịt Bò, Đạm Cao",
+  "rating": 4.6,
+  "menu": [
+    {
+      "item_id": "M09",
+      "name": "Bò Bít Tết Sốt Tiêu Xanh",
+      "price": 150000,
+      "calories": 600,
+      "description": "250g bò bít tết thăn ngoại, sốt tiêu đen đậm đà. Ăn kèm xà lách, ngập ngụa protein và no lâu."
+    },
+    {
+      "item_id": "M10",
+      "name": "Nạc Dăm Heo Nướng Tảng",
+      "price": 120000,
+      "calories": 700,
+      "description": "Thịt heo nướng mọng nước, tỷ lệ nạc cao, cực kỳ giàu năng lượng và phù hợp cho người tập gym."
+    }
+  ]
+}
