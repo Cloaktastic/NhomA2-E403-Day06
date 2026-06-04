@@ -872,12 +872,30 @@
             </div>
         `;
 
+        function setChatProcessingState(isProcessing) {
+            const input = document.getElementById('chat-input');
+            const sendBtn = document.querySelector('.send-btn');
+            if (isProcessing) {
+                input.disabled = true;
+                sendBtn.disabled = true;
+                sendBtn.style.opacity = '0.5';
+                sendBtn.style.cursor = 'not-allowed';
+            } else {
+                input.disabled = false;
+                sendBtn.disabled = false;
+                sendBtn.style.opacity = '1';
+                sendBtn.style.cursor = 'pointer';
+                input.focus();
+            }
+        }
+
         async function sendQuickAction(userText) {
             appendMessage('user', userText);
             
-            // Show typing indicator
+            // Show typing indicator and disable inputs
             const typingId = 'typing-' + Date.now();
             appendMessage('bot', `<span id="${typingId}">${typingIndicatorHtml}</span>`);
+            setChatProcessingState(true);
 
             try {
                 // Call Python Backend with path 'custom' so LLM processes it
@@ -894,6 +912,8 @@
             } catch (e) {
                 document.getElementById(typingId).parentNode.remove();
                 appendMessage('bot', `Lỗi kết nối tới Server Python: ${e.message}`);
+            } finally {
+                setChatProcessingState(false);
             }
         }
 
@@ -907,6 +927,7 @@
             
             const typingId = 'typing-' + Date.now();
             appendMessage('bot', `<span id="${typingId}">${typingIndicatorHtml}</span>`);
+            setChatProcessingState(true);
 
             try {
                 const response = await fetch('/api/chat', {
@@ -919,7 +940,9 @@
                 appendMessage('bot', data.reply_html + feedbackHtml);
             } catch (e) {
                 document.getElementById(typingId).parentNode.remove();
-                appendMessage('bot', `Lỗi kết nối tới Server Python: ${e.message}`);
+                appendMessage('bot', `Lỗi kết nối tới Server: ${e.message}`);
+            } finally {
+                setChatProcessingState(false);
             }
         }
 
