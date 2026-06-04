@@ -889,8 +889,27 @@
             }
         }
 
+        function getLastBotMessage() {
+            const botMessages = document.querySelectorAll('.bot-message .message-content');
+            if (botMessages.length > 0) {
+                // Return text content of the last bot message, trim whitespace
+                let text = botMessages[botMessages.length - 1].innerText.trim();
+                // If it's the typing indicator, we should get the one before it
+                if (text.includes("GrabBot đang suy nghĩ")) {
+                    if (botMessages.length > 1) {
+                        return botMessages[botMessages.length - 2].innerText.trim();
+                    }
+                    return "";
+                }
+                return text;
+            }
+            return "";
+        }
+
         async function sendQuickAction(userText) {
             appendMessage('user', userText);
+            
+            const lastBotMsg = getLastBotMessage();
             
             // Show typing indicator and disable inputs
             const typingId = 'typing-' + Date.now();
@@ -902,7 +921,7 @@
                 const response = await fetch('/api/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ path: 'custom', message: userText })
+                    body: JSON.stringify({ path: 'custom', message: userText, last_bot_message: lastBotMsg })
                 });
                 const data = await response.json();
                 
@@ -925,6 +944,8 @@
             input.value = '';
             appendMessage('user', text);
             
+            const lastBotMsg = getLastBotMessage();
+            
             const typingId = 'typing-' + Date.now();
             appendMessage('bot', `<span id="${typingId}">${typingIndicatorHtml}</span>`);
             setChatProcessingState(true);
@@ -933,7 +954,7 @@
                 const response = await fetch('/api/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ path: 'custom', message: text })
+                    body: JSON.stringify({ path: 'custom', message: text, last_bot_message: lastBotMsg })
                 });
                 const data = await response.json();
                 document.getElementById(typingId).parentNode.remove();
