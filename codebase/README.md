@@ -1,13 +1,34 @@
-# Codebase
+# GrabFood AI Balanced Diet - Prototype (Day 06)
 
-Đây là nơi nhóm nộp toàn bộ phần code của prototype. Mục tiêu là để giảng viên và các nhóm khác nhìn được sản phẩm chạy như thế nào, và mỗi thành viên đã đóng góp ra sao.
+Đây là mã nguồn Prototype cho tính năng **Trợ lý Dinh Dưỡng AI** tích hợp trên ứng dụng GrabFood, được xây dựng cho buổi Hackathon Day 06.
 
-## Nhóm cần làm
+## 🚀 Hướng dẫn cài đặt và chạy (Local)
 
-- Đưa mã nguồn của prototype vào folder này. Nếu prototype được deploy hoặc host ở nơi khác, hãy để lại đường link kèm hướng dẫn truy cập.
-- Trong file `README.md` của nhóm, ghi rõ ba điều: cách chạy prototype (các bước cài đặt và biến môi trường nếu cần), những công cụ và API đã dùng (model AI, framework, công cụ dựng giao diện…), và phần phân công ai làm gì.
-- Mỗi thành viên nên có ít nhất một commit thực chất trong repo — đây là căn cứ để ghi nhận đóng góp của từng người.
+Để trải nghiệm giao diện Trang chủ GrabFood và tính năng Chatbot AI (Mockup 4 luồng lõi), vui lòng làm theo các bước sau:
 
-## Lưu ý
+**Bước 1: Di chuyển vào thư mục dự án**
+Mở Terminal / Command Prompt và chạy:
+```cmd
+cd codebase
+```
 
-Đừng commit những thông tin nhạy cảm như API key hay file `.env`. Nếu prototype cần các biến môi trường, hãy dùng một file `.env.example` để mô tả các biến đó thay vì để lộ giá trị thật.
+**Bước 2: Khởi tạo và kích hoạt môi trường ảo (Virtual Environment)**
+```cmd
+python -m venv .venv
+```
+Kích hoạt môi trường:
+- **Windows (PowerShell):** `.\.venv\Scripts\activate`
+- **Windows (CMD):** `.venv\Scripts\activate.bat`
+
+**Bước 3: Cài đặt thư viện**
+```cmd
+pip install fastapi uvicorn pydantic langchain langgraph langchain-google-genai
+```
+
+**Bước 4: Khởi chạy Server**
+```cmd
+python src/app.py
+```
+Sau khi Terminal báo Server đã chạy, mở trình duyệt và truy cập: 👉 **[http://localhost:8000](http://localhost:8000)**
+
+---

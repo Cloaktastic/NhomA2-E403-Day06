@@ -1,4 +1,19 @@
+# OS generated files
 .DS_Store
-node_modules/
-.env
 *.log
+node_modules/
+
+# Environments
+.env
+.venv
+.venv/
+venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
