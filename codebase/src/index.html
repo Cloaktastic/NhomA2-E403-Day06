@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grab UI Mockup</title>
+    <link rel="icon" href="https://www.grab.com/favicon.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -552,15 +553,19 @@
         
         <div class="chat-body" id="chat-body">
             <div class="chat-msg bot-msg">
-                Chào bạn! Hôm nay bạn muốn ăn gì để giữ dáng? Nhập lượng calo mong muốn hoặc chế độ ăn nhé.
+                👋 Chào bạn! Trưa rồi, bạn muốn ăn gì?<br><br>
+                Mình có thể gợi ý món theo:<br>
+                🔥 Lượng Calo<br>
+                💪 Lượng Đạm (Protein)<br>
+                🥗 Chế độ ăn (Keto, Eat Clean...)
             </div>
         </div>
 
         <div class="chat-quick-actions">
-            <button onclick="sendQuickAction('happy')">🌟 Happy Path</button>
-            <button onclick="sendQuickAction('low_conf')">🤔 Low-confidence</button>
-            <button onclick="sendQuickAction('failure')">⚠️ Failure Path</button>
-            <button onclick="sendQuickAction('correction')">✏️ Correction</button>
+            <button onclick="sendQuickAction('🥗 Đề cử món giảm cân')">🥗 Đề cử món giảm cân</button>
+            <button onclick="sendQuickAction('🥩 Gợi ý đồ ăn nhiều đạm')">🥩 Đồ ăn nhiều đạm</button>
+            <button onclick="sendQuickAction('🥑 Tìm món Keto')">🥑 Tìm món Keto</button>
+            <button onclick="sendQuickAction('🍛 Món nào no lâu')">🍛 Món nào no lâu</button>
         </div>
 
         <div class="chat-input-area">
@@ -581,15 +586,15 @@
             z-index: 1000;
             display: none;
             flex-direction: column;
-            animation: slideInRight 0.3s ease-out;
+            animation: slideInUp 0.3s ease-out;
             max-width: 400px;
             margin: auto;
             right: 0;
         }
 
-        @keyframes slideInRight {
-            from { transform: translateX(100%); }
-            to { transform: translateX(0); }
+        @keyframes slideInUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
         }
 
         .chat-header {
@@ -723,27 +728,108 @@
             padding: 5px;
             border-radius: 5px;
         }
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            font-style: italic;
+            color: #666;
+            font-size: 13px;
+        }
+
+        .typing-dots {
+            display: flex;
+            margin-left: 4px;
+        }
+
+        .typing-dots span {
+            animation: blink 1.4s infinite both;
+            height: 4px;
+            width: 4px;
+            background: #666;
+            border-radius: 50%;
+            display: inline-block;
+            margin: 0 1px;
+        }
+
+        .typing-dots span:nth-child(1) { animation-delay: 0.2s; }
+        .typing-dots span:nth-child(2) { animation-delay: 0.4s; }
+        .typing-dots span:nth-child(3) { animation-delay: 0.6s; }
+
+        @keyframes blink {
+            0% { opacity: 0.2; }
+            20% { opacity: 1; }
+            100% { opacity: 0.2; }
+        }
+
+        .feedback-area {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 12px;
+            color: #888;
+            border-top: 1px dashed #eee;
+            padding-top: 8px;
+        }
+
+        .feedback-btn {
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        
+        .feedback-btn:hover {
+            color: var(--grab-green);
+        }
+
+        .feedback-thanks {
+            color: var(--grab-green);
+            font-weight: 600;
+            display: none;
+            margin-left: auto;
+        }
     </style>
 
     <!-- CHAT LOGIC -->
     <script>
+        let isChatInitialized = false;
+
         function toggleChat() {
             const modal = document.getElementById('chat-modal');
             if (modal.style.display === 'flex') {
                 modal.style.display = 'none';
             } else {
                 modal.style.display = 'flex';
+                if (!isChatInitialized) {
+                    resetChat();
+                    isChatInitialized = true;
+                }
                 scrollToBottom();
             }
         }
 
-        function resetChat() {
+        async function resetChat() {
             const body = document.getElementById('chat-body');
-            body.innerHTML = `
-                <div class="chat-msg bot-msg">
-                    Chào bạn! Hôm nay bạn muốn ăn gì để giữ dáng? Nhập lượng calo mong muốn hoặc chế độ ăn nhé.
-                </div>
-            `;
+            body.innerHTML = '';
+            
+            const typingId = 'typing-' + Date.now();
+            appendMessage('bot', `<span id="${typingId}">${typingIndicatorHtml}</span>`);
+
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ path: 'greeting', message: '' })
+                });
+                const data = await response.json();
+                document.getElementById(typingId).parentNode.remove();
+                
+                // Add the response, replacing line breaks with <br>
+                const formattedReply = data.reply_html.replace(/\n/g, '<br>');
+                appendMessage('bot', formattedReply);
+            } catch (e) {
+                document.getElementById(typingId).parentNode.remove();
+                appendMessage('bot', `👋 Chào bạn! Bạn muốn ăn gì?`);
+            }
         }
 
         function scrollToBottom() {
@@ -760,34 +846,93 @@
             scrollToBottom();
         }
 
-        async function sendQuickAction(pathType) {
-            let userText = "";
-            if (pathType === 'happy') userText = "Trưa nay cần 600 Calo, nhiều đạm";
-            else if (pathType === 'low_conf') userText = "Tôi muốn ăn Cơm thập cẩm đặc biệt";
-            else if (pathType === 'failure') userText = "Tôi đang theo chế độ ăn Keto siêu nghiêm ngặt";
-            else if (pathType === 'correction') userText = "Bỏ bớt cơm trắng, thêm rau luộc trong combo gà luộc nhé";
+        function handleFeedback(btn) {
+            const area = btn.parentElement;
+            const thanks = area.querySelector('.feedback-thanks');
+            thanks.style.display = 'block';
+            setTimeout(() => {
+                thanks.style.display = 'none';
+            }, 3000);
+        }
 
+        const feedbackHtml = `
+            <div class="feedback-area">
+                <span title="Hữu ích" class="feedback-btn" onclick="handleFeedback(this)"><i class="far fa-thumbs-up"></i></span>
+                <span title="Không tốt" class="feedback-btn" onclick="handleFeedback(this)"><i class="far fa-thumbs-down"></i></span>
+                <span class="feedback-thanks">Cảm ơn bạn!</span>
+            </div>
+        `;
+
+        const typingIndicatorHtml = `
+            <div class="typing-indicator">
+                GrabBot đang suy nghĩ
+                <div class="typing-dots">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        `;
+
+        function setChatProcessingState(isProcessing) {
+            const input = document.getElementById('chat-input');
+            const sendBtn = document.querySelector('.send-btn');
+            if (isProcessing) {
+                input.disabled = true;
+                sendBtn.disabled = true;
+                sendBtn.style.opacity = '0.5';
+                sendBtn.style.cursor = 'not-allowed';
+            } else {
+                input.disabled = false;
+                sendBtn.disabled = false;
+                sendBtn.style.opacity = '1';
+                sendBtn.style.cursor = 'pointer';
+                input.focus();
+            }
+        }
+
+        function getLastBotMessage() {
+            const botMessages = document.querySelectorAll('.bot-message .message-content');
+            if (botMessages.length > 0) {
+                // Return text content of the last bot message, trim whitespace
+                let text = botMessages[botMessages.length - 1].innerText.trim();
+                // If it's the typing indicator, we should get the one before it
+                if (text.includes("GrabBot đang suy nghĩ")) {
+                    if (botMessages.length > 1) {
+                        return botMessages[botMessages.length - 2].innerText.trim();
+                    }
+                    return "";
+                }
+                return text;
+            }
+            return "";
+        }
+
+        async function sendQuickAction(userText) {
             appendMessage('user', userText);
             
-            // Show typing indicator
+            const lastBotMsg = getLastBotMessage();
+            
+            // Show typing indicator and disable inputs
             const typingId = 'typing-' + Date.now();
-            appendMessage('bot', `<span id="${typingId}">Đang phân tích...</span>`);
+            appendMessage('bot', `<span id="${typingId}">${typingIndicatorHtml}</span>`);
+            setChatProcessingState(true);
 
             try {
-                // Call Python Backend
+                // Call Python Backend with path 'custom' so LLM processes it
                 const response = await fetch('/api/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ path: pathType, message: userText })
+                    body: JSON.stringify({ path: 'custom', message: userText, last_bot_message: lastBotMsg })
                 });
                 const data = await response.json();
                 
                 // Remove typing indicator and show real response
                 document.getElementById(typingId).parentNode.remove();
-                appendMessage('bot', data.reply_html);
+                appendMessage('bot', data.reply_html + feedbackHtml);
             } catch (e) {
                 document.getElementById(typingId).parentNode.remove();
                 appendMessage('bot', `Lỗi kết nối tới Server Python: ${e.message}`);
+            } finally {
+                setChatProcessingState(false);
             }
         }
 
@@ -799,21 +944,26 @@
             input.value = '';
             appendMessage('user', text);
             
+            const lastBotMsg = getLastBotMessage();
+            
             const typingId = 'typing-' + Date.now();
-            appendMessage('bot', `<span id="${typingId}">Đang xử lý...</span>`);
+            appendMessage('bot', `<span id="${typingId}">${typingIndicatorHtml}</span>`);
+            setChatProcessingState(true);
 
             try {
                 const response = await fetch('/api/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ path: 'custom', message: text })
+                    body: JSON.stringify({ path: 'custom', message: text, last_bot_message: lastBotMsg })
                 });
                 const data = await response.json();
                 document.getElementById(typingId).parentNode.remove();
-                appendMessage('bot', data.reply_html);
+                appendMessage('bot', data.reply_html + feedbackHtml);
             } catch (e) {
                 document.getElementById(typingId).parentNode.remove();
-                appendMessage('bot', `Lỗi kết nối tới Server Python: ${e.message}`);
+                appendMessage('bot', `Lỗi kết nối tới Server: ${e.message}`);
+            } finally {
+                setChatProcessingState(false);
             }
         }
 

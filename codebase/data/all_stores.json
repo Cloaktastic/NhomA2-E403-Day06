@@ -1,0 +1,227 @@
+[
+  {
+    "store_id": "S02",
+    "name": "Cơm Sườn Đào Duy Từ",
+    "category": "Cơm, Món Việt",
+    "rating": 4.5,
+    "menu": [
+      {
+        "item_id": "M03",
+        "name": "Cơm Đảo Sườn Nướng BBQ",
+        "price": 65000,
+        "calories": 780,
+        "description": "Sườn nướng BBQ đậm đà, ăn kèm cơm đảo mỡ hành thơm phức cực bắt miệng.",
+        "image_url": "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=500&q=80"
+      },
+      {
+        "item_id": "M04",
+        "name": "Cơm Gà Quay Tiêu Đen",
+        "price": 60000,
+        "calories": 810,
+        "description": "Đùi gà quay giòn rụm, thịt mềm mọng nước tắm trong sốt tiêu đen đặc trưng.",
+        "image_url": "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=500&q=80"
+      }
+    ],
+    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=500&q=80"
+  },
+  {
+    "store_id": "S01",
+    "name": "Bếp Nhà Heo - Eat Clean",
+    "category": "Healthy, Salad",
+    "rating": 4.8,
+    "menu": [
+      {
+        "item_id": "M01",
+        "name": "Salad Ức Gà Áp Chảo",
+        "price": 65000,
+        "calories": 350,
+        "description": "Salad tươi mát kèm ức gà mềm, sốt chanh leo ít béo.",
+        "image_url": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80"
+      },
+      {
+        "item_id": "M02",
+        "name": "Cơm Gạo Lứt Bò Lúc Lắc",
+        "price": 85000,
+        "calories": 480,
+        "description": "Bò lúc lắc xào dầu oliu, ăn kèm cơm gạo lứt dẻo.",
+        "image_url": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=500&q=80"
+      }
+    ],
+    "image_url": "https://images.unsplash.com/photo-1498837167332-2e4a3692f08a?w=500&q=80"
+  },
+  {
+    "store_id": "S03",
+    "name": "Bếp Keto Hà Nội",
+    "category": "Keto, Eat Clean",
+    "rating": 4.9,
+    "menu": [
+      {
+        "item_id": "M05",
+        "name": "Mì Ý Zucchini Sốt Bò Bằm",
+        "price": 95000,
+        "calories": 420,
+        "description": "Mì làm từ bí ngòi ít carb, sốt bò bằm cà chua nguyên chất.",
+        "image_url": "https://images.unsplash.com/photo-1623428187969-5da2dcea5ebf?w=500&q=80"
+      },
+      {
+        "item_id": "M06",
+        "name": "Cá Hồi Nướng Măng Tây",
+        "price": 125000,
+        "calories": 520,
+        "description": "Cá hồi Na Uy nướng bơ tỏi, ăn kèm măng tây xào.",
+        "image_url": "https://images.unsplash.com/photo-1559847844-5315695dadae?w=500&q=80"
+      }
+    ],
+    "image_url": "https://images.unsplash.com/photo-1543339308-43e59d6b73a6?w=500&q=80"
+  },
+  {
+    "store_id": "S04",
+    "name": "Poke Hanoi - Hawaiian Salad",
+    "category": "Salad, Healthy",
+    "rating": 4.7,
+    "menu": [
+      {
+        "item_id": "M07",
+        "name": "Bát Salad Tự Chọn 5 Topping Đạm",
+        "price": 80000,
+        "calories": 400,
+        "description": "Salad đầy đặn với trứng, ức gà, đậu hũ non. Cực nhiều protein, phù hợp siết mỡ.",
+        "image_url": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=500&q=80"
+      },
+      {
+        "item_id": "M08",
+        "name": "Salad Bò Mỹ Sốt Mè Rang (Keto)",
+        "price": 95000,
+        "calories": 450,
+        "description": "Thịt bò nạc thơm mềm kèm các loại rau củ ít đường, rất hợp với chế độ Keto.",
+        "image_url": "https://images.unsplash.com/photo-1543339308-43e59d6b73a6?w=500&q=80"
+      }
+    ],
+    "image_url": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=500&q=80"
+  },
+  {
+    "store_id": "S05",
+    "name": "Bò Tơ Quán Mộc",
+    "category": "Thịt Bò, Đạm Cao",
+    "rating": 4.6,
+    "menu": [
+      {
+        "item_id": "M09",
+        "name": "Bò Bít Tết Sốt Tiêu Xanh",
+        "price": 150000,
+        "calories": 600,
+        "description": "250g bò bít tết thăn ngoại, sốt tiêu đen đậm đà. Ăn kèm xà lách, ngập ngụa protein và no lâu.",
+        "image_url": "https://images.unsplash.com/photo-1600891964092-4316c288032e?w=500&q=80"
+      },
+      {
+        "item_id": "M10",
+        "name": "Nạc Dăm Heo Nướng Tảng",
+        "price": 120000,
+        "calories": 700,
+        "description": "Thịt heo nướng mọng nước, tỷ lệ nạc cao, cực kỳ giàu năng lượng và phù hợp cho người tập gym.",
+        "image_url": "https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=500&q=80"
+      }
+    ],
+    "image_url": "https://images.unsplash.com/photo-1600891964092-4316c288032e?w=500&q=80"
+  },
+  {
+    "store_id": "S06",
+    "name": "Phở Thìn Lò Đúc",
+    "category": "Phở, Món Nước",
+    "rating": 4.8,
+    "menu": [
+      {
+        "item_id": "M11",
+        "name": "Phở Bò Tái Lăn",
+        "price": 80000,
+        "calories": 500,
+        "description": "Bò xào lăn thơm mùi tỏi, nước dùng béo ngậy.",
+        "image_url": "https://images.unsplash.com/photo-1582878826629-29b7ad1cb438?w=500&q=80"
+      },
+      {
+        "item_id": "M12",
+        "name": "Phở Bò Chín Nạm",
+        "price": 70000,
+        "calories": 550,
+        "description": "Thịt nạm mềm, gầu giòn, nước dùng thanh ngọt.",
+        "image_url": "https://images.unsplash.com/photo-1594998893017-361fd6cb8b30?w=500&q=80"
+      }
+    ],
+    "image_url": "https://images.unsplash.com/photo-1582878826629-29b7ad1cb438?w=500&q=80"
+  },
+  {
+    "store_id": "S07",
+    "name": "Bánh Mì Dân Tổ",
+    "category": "Bánh Mì, Ăn Nhanh",
+    "rating": 4.5,
+    "menu": [
+      {
+        "item_id": "M13",
+        "name": "Bánh Mì Thập Cẩm",
+        "price": 35000,
+        "calories": 450,
+        "description": "Nhân pate xào chung với trứng, chả, xúc xích thơm lừng.",
+        "image_url": "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=500&q=80"
+      },
+      {
+        "item_id": "M14",
+        "name": "Bánh Mì Bò Né",
+        "price": 45000,
+        "calories": 550,
+        "description": "Bò né mềm ẩm kẹp trong bánh mì giòn tan.",
+        "image_url": "https://images.unsplash.com/photo-1550507992-eb63ffee0847?w=500&q=80"
+      }
+    ],
+    "image_url": "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=500&q=80"
+  },
+  {
+    "store_id": "S08",
+    "name": "Ăn Vặt Cô Tuyết",
+    "category": "Ăn Vặt, Trà Sữa",
+    "rating": 4.4,
+    "menu": [
+      {
+        "item_id": "M15",
+        "name": "Nem Chua Rán",
+        "price": 50000,
+        "calories": 600,
+        "description": "Nem chua lăn bột chiên xù giòn rụm.",
+        "image_url": "https://images.unsplash.com/photo-1626074353765-517a681e40be?w=500&q=80"
+      },
+      {
+        "item_id": "M16",
+        "name": "Bánh Tráng Trộn",
+        "price": 30000,
+        "calories": 400,
+        "description": "Đầy đủ topping bò khô, trứng cút, xoài xanh chua ngọt.",
+        "image_url": "https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=500&q=80"
+      }
+    ],
+    "image_url": "https://images.unsplash.com/photo-1626074353765-517a681e40be?w=500&q=80"
+  },
+  {
+    "store_id": "S09",
+    "name": "Nhà Hàng Chay Vị Lai",
+    "category": "Đồ Chay, Thanh Đạm",
+    "rating": 4.9,
+    "menu": [
+      {
+        "item_id": "M17",
+        "name": "Cơm Gạo Lứt Hạt Sen",
+        "price": 65000,
+        "calories": 350,
+        "description": "Gạo lứt dẻo thơm nấu cùng hạt sen bổ dưỡng.",
+        "image_url": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=500&q=80"
+      },
+      {
+        "item_id": "M18",
+        "name": "Đậu Hũ Non Sốt Nấm",
+        "price": 55000,
+        "calories": 200,
+        "description": "Đậu hũ non mềm mịn tắm trong sốt nấm hương mặn ngọt.",
+        "image_url": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80"
+      }
+    ],
+    "image_url": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=500&q=80"
+  }
+]
