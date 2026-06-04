@@ -41,55 +41,10 @@ async def chat_endpoint(req: ChatRequest):
     else:
         session = "Tối"
 
-    # Dựa vào path type từ frontend để trả về mockup phù hợp
+    # Dựa vào path type từ frontend để xử lý
     path_type = req.path
     
-    if path_type == "happy":
-        reply = """
-        <b>Đã tìm thấy combo phù hợp cho bạn!</b><br>
-        <div class="combo-card">
-            <b>🥗 Cơm gà luộc xé + Canh rau cải thịt bằm</b><br>
-            <i>Quán: Cơm Gà Healthy 99</i><br>
-            <div style="color: #444; font-size: 13px; margin-top: 8px;">
-                📝 <b>Phân tích:</b> Món này rất giàu protein nạc từ ức gà giúp no lâu và săn chắc cơ. Canh rau cải bổ sung chất xơ, vitamin, giúp hệ tiêu hóa khỏe mạnh. Lượng tinh bột từ cơm vừa đủ để cung cấp năng lượng.
-            </div>
-        </div>
-        """
-    elif path_type == "failure":
-        reply = """
-        <b>Gợi ý cho chế độ Keto của bạn:</b><br>
-        <div class="combo-card">
-            <b>🥩 Salad Bò Xốt Mayonnaise</b><br>
-            <div style="color: #444; font-size: 13px; margin-top: 8px;">
-                📝 <b>Phân tích:</b> Thịt bò chứa nhiều đạm và sắt, kết hợp với các loại rau xanh tươi mát. Tuy nhiên, lưu ý sốt Mayonnaise có thể chứa đường ngầm.
-            </div>
-            <div class="warning-label">⚠️ Chú ý: Bạn nên yêu cầu quán để riêng sốt để tự kiểm soát, không phá vỡ chế độ Keto.</div>
-        </div>
-        """
-    elif path_type == "low_conf":
-        reply = """
-        <b>Món này nguyên liệu hơi đa dạng:</b><br>
-        <div class="combo-card">
-            <b>🍛 Cơm thập cẩm đặc biệt</b><br>
-            <div style="color: #444; font-size: 13px; margin-top: 8px;">
-                📝 <b>Phân tích:</b> Cơm thập cẩm có rất nhiều loại topping khác nhau như chả, lạp xưởng, trứng. Rất ngon miệng nhưng khó kiểm soát thành phần dinh dưỡng.
-            </div>
-            <div style="color: #666; font-size: 12px; margin-top: 5px;">
-                💡 <i>Khuyên bạn nên chọn món ghi rõ nguyên liệu nếu đang ăn kiêng nghiêm ngặt!</i>
-            </div>
-        </div>
-        """
-    elif path_type == "correction":
-        reply = """
-        <b>Đã cập nhật lại món cho bạn:</b><br>
-        <div class="combo-card">
-            <b>🥗 Gà luộc xé + Canh cải + Rau luộc (Ít cơm)</b><br>
-            <div style="color: #444; font-size: 13px; margin-top: 8px;">
-                📝 <b>Phân tích:</b> Đã giảm bớt tinh bột (cơm) và tăng cường thêm chất xơ từ rau luộc. Món ăn giờ đây cực kỳ nhẹ bụng, phù hợp cho tiêu chí siết dáng mà vẫn đủ đạm từ gà xé.
-            </div>
-        </div>
-        """
-    elif path_type == "greeting":
+    if path_type == "greeting":
         reply = f"👋 Chào bạn! Buổi {session} rồi, bạn muốn ăn gì?<br><br>Mình có thể gợi ý món theo:<br>🔥 Lượng Calo<br>💪 Lượng Đạm (Protein)<br>🥗 Chế độ ăn (Keto, Eat Clean...)"
     else:
         # Nếu là luồng custom (tin nhắn tự do của user), gọi LLM thực tế
@@ -104,12 +59,15 @@ async def chat_endpoint(req: ChatRequest):
                 for filepath in data_dir.glob("*.json"):
                     try:
                         with open(filepath, "r", encoding="utf-8") as f:
-                            store_data = json.load(f)
-                            store_name = store_data.get("name", "")
-                            for item in store_data.get("menu", []):
-                                item_name = item.get("name", "")
-                                calories = item.get("calories", "")
-                                menu_context.append(f"- Quán: {store_name} | Món: {item_name} ({calories} kcal)")
+                            data = json.load(f)
+                            # Handle both list of stores and single store object
+                            stores = data if isinstance(data, list) else [data]
+                            for store in stores:
+                                store_name = store.get("name", "")
+                                for item in store.get("menu", []):
+                                    item_name = item.get("name", "")
+                                    calories = item.get("calories", "")
+                                    menu_context.append(f"- Quán: {store_name} | Món: {item_name} ({calories} kcal)")
                     except Exception:
                         pass
             
@@ -130,7 +88,7 @@ async def chat_endpoint(req: ChatRequest):
             4. NẾU USER HỎI QUÁ CHUNG CHUNG VÀ HOÀN TOÀN CHƯA CÓ TIÊU CHÍ GÌ (VD: "Không biết ăn gì", "Gợi ý bừa đi", "Ăn gì ngon"): BẠN MỚI ĐẶT CÂU HỎI LẠI để thu hẹp phạm vi. Câu hỏi phải tự nhiên và phù hợp với buổi {session} (VD: Sáng thì hỏi có muốn ăn món nước hay salad không; Trưa thì hỏi có thèm cơm, bò hay gà không...). Trả lời bằng TEXT thường, không dùng HTML.
             5. NẾU USER ĐÃ ĐƯA RA BẤT KỲ TIÊU CHÍ NÀO DÙ LÀ NHỎ NHẤT (VD: "Tìm món keto", "Ăn nhiều đạm", "Gợi ý món gà", "Thèm thịt", "Muốn ăn rau"): BẠN BẮT BUỘC PHẢI GỢI Ý MÓN LUÔN, TUYỆT ĐỐI KHÔNG ĐƯỢC HỎI LẠI. BẠN PHẢI CHỈ CHỌN 2 MÓN ĂN TỪ 2 QUÁN KHÁC NHAU CÓ SẴN TRONG DANH SÁCH MENU BÊN TRÊN ĐỂ ĐỀ XUẤT. TUYỆT ĐỐI KHÔNG TỰ BỊA RA MÓN MỚI HAY QUÁN MỚI. 
             Bạn phải xem xét việc bây giờ là buổi {session} để chọn món cho hợp lý. BẠN PHẢI MỞ ĐẦU BẰNG 1-2 CÂU GIAO TIẾP "VĂN VỞ", TỰ NHIÊN (ví dụ: 'Tuyệt vời, nếu bạn đang muốn siết mỡ thì mình có món này cực đỉnh...', 'Dạ vâng, để nạp đủ năng lượng cho buổi {session}...'). LƯU Ý QUAN TRỌNG: LUÔN THAY ĐỔI VÀ ĐA DẠNG HÓA CÁCH DIỄN ĐẠT TRONG PHẦN "VĂN VỞ" NÀY MỖI LẦN TRẢ LỜI, SÁNG TẠO HƠN VÀ KHÔNG DÙNG LẠI MỘT MẪU CÂU CỐ ĐỊNH. SAU ĐÓ BẮT BUỘC Trả về phần thẻ món ăn dưới dạng HTML div class="combo-card" NHƯ MẪU SAU.
-            LƯU Ý: Phần "Phân tích" phải do AI tự dùng kiến thức dinh dưỡng để phân tích dựa trên tên món ăn (ví dụ: món này có những nguyên liệu gì, giàu chất gì, tại sao tốt cho giảm cân/keto/no lâu...), KHÔNG ĐƯỢC viết chung chung. PHẦN NÀY CŨNG PHẢI ĐA DẠNG TỪ NGỮ.
+            LƯU Ý: Phần "Phân tích" BẮT BUỘC PHẢI RẤT NGẮN GỌN (TỐI ĐA 1 CÂU). AI tự dùng kiến thức dinh dưỡng để phân tích điểm nổi bật nhất của món ăn, tuyệt đối không viết dài dòng lê thê.
             
             [1-2 CÂU GIAO TIẾP VĂN VỞ CỦA BẠN TẠI ĐÂY]<br><br>
             <b>Gợi ý dành cho bạn:</b><br>
@@ -138,22 +96,18 @@ async def chat_endpoint(req: ChatRequest):
                 <b>🥗 [TÊN MÓN ĂN TỪ QUÁN 1]</b><br>
                 <i>Quán: [TÊN QUÁN 1 TRONG MENU]</i><br>
                 <div style="color: #444; font-size: 13px; margin-top: 8px;">
-                    📝 <b>Phân tích:</b> <i>[AI tự viết 2-3 câu phân tích sâu về dinh dưỡng, lợi ích của món này đối với yêu cầu của user]</i>
+                    📝 <b>Phân tích:</b> <i>[1 CÂU phân tích CỰC KỲ NGẮN GỌN]</i>
                 </div>
-                <div style="color: #666; font-size: 12px; margin-top: 8px;">
-                    💡 <i>[1 lời khuyên ngắn gọn của bạn]</i>
-                </div>
+                <button style="width: 100%; padding: 8px; margin-top: 10px; background: #00B14F; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">Đến quán ngay</button>
             </div>
             
             <div class="combo-card">
                 <b>🍲 [TÊN MÓN ĂN TỪ QUÁN 2 (PHẢI KHÁC QUÁN 1)]</b><br>
                 <i>Quán: [TÊN QUÁN 2 TRONG MENU]</i><br>
                 <div style="color: #444; font-size: 13px; margin-top: 8px;">
-                    📝 <b>Phân tích:</b> <i>[AI tự viết 2-3 câu phân tích sâu về dinh dưỡng, lợi ích của món này đối với yêu cầu của user]</i>
+                    📝 <b>Phân tích:</b> <i>[1 CÂU phân tích CỰC KỲ NGẮN GỌN]</i>
                 </div>
-                <div style="color: #666; font-size: 12px; margin-top: 8px;">
-                    💡 <i>[1 lời khuyên ngắn gọn của bạn]</i>
-                </div>
+                <button style="width: 100%; padding: 8px; margin-top: 10px; background: #00B14F; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">Đến quán ngay</button>
             </div>
             """
             
